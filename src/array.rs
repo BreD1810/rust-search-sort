@@ -1,13 +1,18 @@
+use rand::thread_rng;
+use rand::seq::SliceRandom;
+
 pub struct Array {
     values: Vec<u32>,
 }
 
 impl Array {
     pub fn new() -> Self {
+        let mut values: Vec<u32> = (1..64).collect();
+        values.shuffle(&mut thread_rng());
+
         let array = Array {
-            values: (1..64).collect(),
+            values: values,
         };
-        // array.shuffle();
 
         array
     }
@@ -24,8 +29,4 @@ impl Array {
         *self.values.iter().max().unwrap_or(&0)
     }
 
-    //     use rand::thread_rng;
-    //     use rand::seq::SliceRandom;
-    //     self.values.shuffle(&mut thread_rng());
-    // }
 }
