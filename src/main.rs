@@ -6,6 +6,7 @@ use piston::window::WindowSettings;
 
 mod app;
 mod array;
+mod sorts;
 
 use crate::app::App;
 
@@ -13,7 +14,6 @@ use crate::app::App;
 const OPENGL_VERSION: OpenGL = OpenGL::V3_2;
 
 fn main() {
-
     // Create a Glutin window.
     let mut window: Window = WindowSettings::new("static-array", [640, 480])
         .graphics_api(OPENGL_VERSION)

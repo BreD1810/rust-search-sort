@@ -4,20 +4,23 @@ use opengl_graphics::GlGraphics;
 use piston::input::RenderArgs;
 
 use crate::array::Array;
+use crate::sorts::bubble::BubbleSort;
+use crate::sorts::Sort;
 
 const BACKGROUND_COLOUR: Color = TRANSPARENT;
 const VALUE_COLOUR: Color = WHITE;
 
 pub struct App {
-    array: Array,  // Rotation for the square.
+    array: Array, // Rotation for the square.
 }
 
 impl App {
     pub fn init() -> Self {
-        let a = Array::new();
-        App {
-            array: a,
-        }
+        let mut a = Array::new();
+        let algo = BubbleSort;
+        algo.sort(&mut a);
+
+        App { array: a }
     }
 
     pub fn render(&mut self, args: &RenderArgs, gl: &mut GlGraphics) {

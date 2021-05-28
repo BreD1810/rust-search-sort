@@ -1,5 +1,5 @@
-use rand::thread_rng;
 use rand::seq::SliceRandom;
+use rand::thread_rng;
 
 pub struct Array {
     values: Vec<u32>,
@@ -7,16 +7,19 @@ pub struct Array {
 
 impl Array {
     pub fn new() -> Self {
-        let mut values: Vec<u32> = (1..64).collect();
+        // Values between 1 and 64 inclusive
+        let mut values: Vec<u32> = (1..65).collect();
         values.shuffle(&mut thread_rng());
 
-        Array {
-            values
-        }
+        Array { values }
     }
 
-    pub fn get(&self, index:usize) -> u32 {
+    pub fn get(&self, index: usize) -> u32 {
         self.values[index]
+    }
+
+    pub fn swap(&mut self, first: usize, second: usize) {
+        self.values.swap(first, second);
     }
 
     pub fn len(&self) -> usize {
@@ -26,5 +29,4 @@ impl Array {
     pub fn max_value(&self) -> u32 {
         *self.values.iter().max().unwrap_or(&0)
     }
-
 }
