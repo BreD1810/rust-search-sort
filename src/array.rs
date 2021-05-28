@@ -10,11 +10,9 @@ impl Array {
         let mut values: Vec<u32> = (1..64).collect();
         values.shuffle(&mut thread_rng());
 
-        let array = Array {
-            values: values,
-        };
-
-        array
+        Array {
+            values
+        }
     }
 
     pub fn get(&self, index:usize) -> u32 {

@@ -9,10 +9,10 @@ mod array;
 
 use crate::app::App;
 
+// Change this to OpenGL::V2_1 if not working
 const OPENGL_VERSION: OpenGL = OpenGL::V3_2;
 
 fn main() {
-    // Change this to OpenGL::V2_1 if not working
 
     // Create a Glutin window.
     let mut window: Window = WindowSettings::new("static-array", [640, 480])
