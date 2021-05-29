@@ -8,9 +8,9 @@ pub struct Array {
 }
 
 impl Array {
-    pub fn new() -> Self {
+    pub fn new(length: u32) -> Self {
         // Values between 1 and 64 inclusive
-        let mut values: Vec<u32> = (1..101).collect();
+        let mut values: Vec<u32> = (1..length + 1).collect();
         values.shuffle(&mut thread_rng());
 
         let no_values = values.len();

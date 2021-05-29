@@ -6,6 +6,7 @@ use std::sync::{Arc, Mutex};
 use std::thread;
 
 use crate::array::Array;
+use crate::cli::Parameters;
 use crate::sorts::bubble::BubbleSort;
 use crate::sorts::Sort;
 
@@ -19,10 +20,14 @@ pub struct App {
 }
 
 impl App {
-    pub fn init() -> Self {
-        let array = Arc::new(Mutex::new(Array::new()));
+    pub fn init(parameters: Parameters) -> Self {
+        let array = Arc::new(Mutex::new(Array::new(parameters.length)));
         let sorting_a = Arc::clone(&array);
-        let algo = BubbleSort;
+
+        let algo = match parameters.algorithm.as_str() {
+            "bubble" => BubbleSort,
+            _ => panic!("Unrecognised algorithm: {}", parameters.algorithm),
+        };
 
         thread::spawn(move || {
             algo.sort(&sorting_a);

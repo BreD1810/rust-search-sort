@@ -6,23 +6,27 @@ use piston::window::WindowSettings;
 
 mod app;
 mod array;
+mod cli;
 mod sorts;
 
 use crate::app::App;
+use crate::cli::parse_parameters;
 
 // Change this to OpenGL::V2_1 if not working
 const OPENGL_VERSION: OpenGL = OpenGL::V3_2;
 
 fn main() {
+    let parameters = parse_parameters();
+    let window_title = format!("{} sort", &parameters.algorithm);
+
     // Create a Glutin window.
-    let mut window: Window = WindowSettings::new("static-array", [640, 480])
+    let mut window: Window = WindowSettings::new(window_title, [640, 480])
         .graphics_api(OPENGL_VERSION)
         .exit_on_esc(true)
         .build()
         .unwrap();
 
-    // Create a new game and run it
-    let mut app = App::init();
+    let mut app = App::init(parameters);
     let mut gl = GlGraphics::new(OPENGL_VERSION);
 
     let mut events = Events::new(EventSettings::new());
