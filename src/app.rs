@@ -1,7 +1,9 @@
-use graphics::color::{TRANSPARENT, WHITE};
+use graphics::color::{BLUE, GREEN, TRANSPARENT, WHITE};
 use graphics::types::Color;
 use opengl_graphics::GlGraphics;
 use piston::input::RenderArgs;
+use std::sync::{Arc, Mutex};
+use std::thread;
 
 use crate::array::Array;
 use crate::sorts::bubble::BubbleSort;
@@ -9,18 +11,24 @@ use crate::sorts::Sort;
 
 const BACKGROUND_COLOUR: Color = TRANSPARENT;
 const VALUE_COLOUR: Color = WHITE;
+const SORTED_COLOUR: Color = GREEN;
+const ACCESS_COLOUR: Color = BLUE;
 
 pub struct App {
-    array: Array, // Rotation for the square.
+    array: Arc<Mutex<Array>>,
 }
 
 impl App {
     pub fn init() -> Self {
-        let mut a = Array::new();
+        let array = Arc::new(Mutex::new(Array::new()));
+        let sorting_a = Arc::clone(&array);
         let algo = BubbleSort;
-        algo.sort(&mut a);
 
-        App { array: a }
+        thread::spawn(move || {
+            algo.sort(&sorting_a);
+        });
+
+        App { array }
     }
 
     pub fn render(&mut self, args: &RenderArgs, gl: &mut GlGraphics) {
@@ -29,21 +37,36 @@ impl App {
 
             clear(BACKGROUND_COLOUR, gl);
 
-            let len = self.array.len();
-            let max_val = self.array.max_value() as f64;
+            let mut a = self.array.lock().unwrap();
+
+            let len = a.len();
+            let max_val = a.max_value() as f64;
             let window_width = args.window_size[0];
             let window_height = args.window_size[1];
 
+            let sorted_indexes = a.get_sorted_indexes();
+            let accesses = a.get_accesses();
+
             for i in 0..len {
-                let value = self.array.get(i);
+                let value = a.get_without_access(i);
 
                 let width = window_width / (len as f64);
                 let height = f64::from(value) * (window_height / max_val);
                 let x = (i as f64) * width;
                 let y = window_height - height;
 
-                rectangle(VALUE_COLOUR, [x, y, width, height], c.transform, gl);
+                let colour: Color;
+                if sorted_indexes.contains(&i) {
+                    colour = SORTED_COLOUR;
+                } else if accesses.contains(&i) {
+                    colour = ACCESS_COLOUR;
+                } else {
+                    colour = VALUE_COLOUR;
+                }
+
+                rectangle(colour, [x, y, width, height], c.transform, gl);
             }
+            a.clear_accesses();
         });
     }
 }
