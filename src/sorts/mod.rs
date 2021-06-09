@@ -5,6 +5,7 @@ pub use crate::array::Array;
 pub mod bubble;
 pub mod insertion;
 pub mod selection;
+pub mod quick;
 
 pub trait Sort {
     fn sort(&self, array: &Arc<Mutex<Array>>);

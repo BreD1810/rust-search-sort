@@ -6,7 +6,7 @@ pub struct Parameters {
 pub fn parse_parameters() -> Parameters {
     use clap::*;
 
-    let sorting_algos = &["bubble", "insertion", "selection"];
+    let sorting_algos = &["bubble", "insertion", "selection", "quick"];
 
     let matches = App::new("rust-search-sort")
         .setting(AppSettings::ColoredHelp)

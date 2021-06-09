@@ -29,6 +29,7 @@ impl App {
             "bubble" => Box::new(sorts::bubble::BubbleSort),
             "insertion" => Box::new(sorts::insertion::InsertionSort),
             "selection" => Box::new(sorts::selection::SelectionSort),
+            "quick" => Box::new(sorts::quick::QuickSort),
             _ => panic!("Unrecognised algorithm: {}", parameters.algorithm),
         };
 
