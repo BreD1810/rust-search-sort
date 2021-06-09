@@ -8,6 +8,7 @@ pub mod insertion;
 pub mod merge;
 pub mod quick;
 pub mod selection;
+pub mod shell;
 
 pub trait Sort {
     fn sort(&self, array: &Arc<Mutex<Array>>);

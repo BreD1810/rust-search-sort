@@ -13,6 +13,7 @@ pub fn parse_parameters() -> Parameters {
         "merge",
         "quick",
         "selection",
+        "shell",
     ];
 
     let matches = App::new("rust-search-sort")

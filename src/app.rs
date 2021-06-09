@@ -32,6 +32,7 @@ impl App {
             "merge" => Box::new(sorts::merge::MergeSort),
             "quick" => Box::new(sorts::quick::QuickSort),
             "selection" => Box::new(sorts::selection::SelectionSort),
+            "shell" => Box::new(sorts::shell::ShellSort),
             _ => panic!("Unrecognised algorithm: {}", parameters.algorithm),
         };
 
