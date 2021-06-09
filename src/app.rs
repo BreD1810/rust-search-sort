@@ -2,10 +2,9 @@ use graphics::color::{BLUE, GREEN, TRANSPARENT, WHITE};
 use graphics::types::Color;
 use opengl_graphics::GlGraphics;
 use piston::input::RenderArgs;
-use std::sync::{Arc, Mutex};
 use std::thread;
 
-use crate::array::Array;
+use crate::array::{Array, State};
 use crate::cli::Parameters;
 use crate::sorts;
 
@@ -15,13 +14,14 @@ const SORTED_COLOUR: Color = GREEN;
 const ACCESS_COLOUR: Color = BLUE;
 
 pub struct App {
-    array: Arc<Mutex<Array>>,
+    array: Array,
 }
 
 impl App {
     pub fn init(parameters: Parameters) -> Self {
-        let array = Arc::new(Mutex::new(Array::new(parameters.length)));
-        let sorting_a = Arc::clone(&array);
+        let state = State::new(parameters.length);
+        let array = Array::new(state);
+        let sorting_a = array.clone();
 
         // Can this be improved?
         // https://doc.rust-lang.org/edition-guide/rust-2018/trait-system/impl-trait-for-returning-complex-types-with-ease.html
@@ -52,18 +52,16 @@ impl App {
 
             clear(BACKGROUND_COLOUR, gl);
 
-            let mut a = self.array.lock().unwrap();
-
-            let len = a.len();
-            let max_val = a.max_value() as f64;
+            let len = self.array.len();
+            let max_val = self.array.max_value() as f64;
             let window_width = args.window_size[0];
             let window_height = args.window_size[1];
 
-            let sorted_indexes = a.get_sorted_indexes();
-            let accesses = a.get_accesses();
+            let sorted_indexes = self.array.get_sorted_indexes();
+            let accesses = self.array.get_accesses();
 
             for i in 0..len {
-                let value = a.get_without_access(i);
+                let value = self.array.get_without_access(i);
 
                 let width = window_width / (len as f64);
                 let height = f64::from(value) * (window_height / max_val);
@@ -81,7 +79,7 @@ impl App {
 
                 rectangle(colour, [x, y, width, height], c.transform, gl);
             }
-            a.clear_accesses();
+            self.array.clear_accesses();
         });
     }
 }

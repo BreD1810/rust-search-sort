@@ -1,15 +1,14 @@
 use super::{Array, Sort};
-use std::sync::{Arc, Mutex};
 
 pub struct InsertionSort;
 
 impl Sort for InsertionSort {
-    fn sort(&self, array: &Arc<Mutex<Array>>) {
-        let len = self.len(array);
+    fn sort(&self, array: &Array) {
+        let len = array.len();
         for i in 0..len {
             let mut j = i;
-            while j > 0 && self.get(array, j - 1) > self.get(array, j) {
-                self.swap(array, j, j - 1);
+            while j > 0 && array.get(j - 1) > array.get(j) {
+                array.swap(j, j - 1);
                 j -= 1;
                 self.wait();
             }
@@ -20,9 +19,9 @@ impl Sort for InsertionSort {
 }
 
 impl InsertionSort {
-    fn mark_all_sorted(&self, array: &Arc<Mutex<Array>>, len: usize) {
+    fn mark_all_sorted(&self, array: &Array, len: usize) {
         for i in 0..len {
-            self.mark_sorted(array, i)
+            array.mark_sorted(i)
         }
     }
 }

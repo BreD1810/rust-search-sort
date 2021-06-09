@@ -1,11 +1,10 @@
 use super::{Array, Sort};
-use std::sync::{Arc, Mutex};
 
 pub struct CombSort;
 
 impl Sort for CombSort {
-    fn sort(&self, array: &Arc<Mutex<Array>>) {
-        let len = self.len(array);
+    fn sort(&self, array: &Array) {
+        let len = array.len();
         let mut gap = len;
         let shrink = 1.3;
         let mut sorted = false;
@@ -19,8 +18,8 @@ impl Sort for CombSort {
 
             let mut i = 0;
             while i + gap < len {
-                if self.get(array, i) > self.get(array, i + gap) {
-                    self.swap(array, i, i + gap);
+                if array.get(i) > array.get(i + gap) {
+                    array.swap(i, i + gap);
                     sorted = false;
                 }
                 i += 1;
@@ -29,7 +28,7 @@ impl Sort for CombSort {
         }
 
         for i in 0..len {
-            self.mark_sorted(array, i);
+            array.mark_sorted(i);
         }
     }
 }

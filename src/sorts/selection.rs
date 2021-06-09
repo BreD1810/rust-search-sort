@@ -1,25 +1,24 @@
 use super::{Array, Sort};
-use std::sync::{Arc, Mutex};
 
 pub struct SelectionSort;
 
 impl Sort for SelectionSort {
-    fn sort(&self, array: &Arc<Mutex<Array>>) {
-        let len = self.len(array);
+    fn sort(&self, array: &Array) {
+        let len = array.len();
 
         for i in 0..len {
             let mut j_min = i;
             for j in i + 1..len {
-                if self.get(array, j) < self.get(array, j_min) {
+                if array.get(j) < array.get(j_min) {
                     j_min = j;
                     self.wait();
                 }
             }
             if j_min != i {
-                self.swap(array, i, j_min);
+                array.swap(i, j_min);
                 self.wait();
             }
-            self.mark_sorted(array, i);
+            array.mark_sorted(i);
         }
     }
 }
