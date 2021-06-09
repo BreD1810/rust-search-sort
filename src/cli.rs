@@ -26,6 +26,7 @@ arg_enum!{
 arg_enum!{
     #[derive(Copy, Clone)]
     pub enum Search {
+        Binary,
         Linear,
     }
 }

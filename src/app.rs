@@ -34,6 +34,7 @@ impl App {
             Ok(Sort::Selection) => Box::new(algorithms::selection::SelectionSort),
             Ok(Sort::Shell) => Box::new(algorithms::shell::ShellSort),
             Err(_) => match parameters.search {
+                Ok(Search::Binary) => Box::new(algorithms::binary::BinarySearch),
                 Ok(Search::Linear) => Box::new(algorithms::linear::LinearSearch),
                 Err(e) => panic!("{}", e),
             }

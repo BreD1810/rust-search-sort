@@ -11,6 +11,7 @@ pub mod quick;
 pub mod selection;
 pub mod shell;
 
+pub mod binary;
 pub mod linear;
 
 pub trait Algorithm {
