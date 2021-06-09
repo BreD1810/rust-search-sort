@@ -29,6 +29,11 @@ impl Array {
         self.values[index]
     }
 
+    pub fn set(&mut self, index: usize, value: u32) {
+        self.accesses.push(index);
+        self.values[index] = value;
+    }
+
     pub fn get_without_access(&mut self, index: usize) -> u32 {
         self.values[index]
     }

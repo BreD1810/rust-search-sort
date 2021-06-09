@@ -28,8 +28,9 @@ impl App {
         let algo: Box<dyn sorts::Sort + Send> = match parameters.algorithm.as_str() {
             "bubble" => Box::new(sorts::bubble::BubbleSort),
             "insertion" => Box::new(sorts::insertion::InsertionSort),
-            "selection" => Box::new(sorts::selection::SelectionSort),
+            "merge" => Box::new(sorts::merge::MergeSort),
             "quick" => Box::new(sorts::quick::QuickSort),
+            "selection" => Box::new(sorts::selection::SelectionSort),
             _ => panic!("Unrecognised algorithm: {}", parameters.algorithm),
         };
 
