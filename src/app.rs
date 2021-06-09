@@ -7,8 +7,7 @@ use std::thread;
 
 use crate::array::Array;
 use crate::cli::Parameters;
-use crate::sorts::bubble::BubbleSort;
-use crate::sorts::Sort;
+use crate::sorts;
 
 const BACKGROUND_COLOUR: Color = TRANSPARENT;
 const VALUE_COLOUR: Color = WHITE;
@@ -24,8 +23,11 @@ impl App {
         let array = Arc::new(Mutex::new(Array::new(parameters.length)));
         let sorting_a = Arc::clone(&array);
 
-        let algo = match parameters.algorithm.as_str() {
-            "bubble" => BubbleSort,
+        // Can this be improved?
+        // https://doc.rust-lang.org/edition-guide/rust-2018/trait-system/impl-trait-for-returning-complex-types-with-ease.html
+        let algo: Box<dyn sorts::Sort + Send> = match parameters.algorithm.as_str() {
+            "bubble" => Box::new(sorts::bubble::BubbleSort),
+            "insertion" => Box::new(sorts::insertion::InsertionSort),
             _ => panic!("Unrecognised algorithm: {}", parameters.algorithm),
         };
 

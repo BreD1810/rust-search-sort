@@ -5,17 +5,17 @@ pub struct BubbleSort;
 
 impl Sort for BubbleSort {
     fn sort(&self, array: &Arc<Mutex<Array>>) {
-        let len = Self::len(array);
+        let len = self.len(array);
         for i in 0..len - 1 {
             let last = len - i - 1;
             for j in 0..last {
-                if Self::get(array, j) > Self::get(array, j + 1) {
-                    Self::swap(array, j, j + 1);
-                    Self::wait();
+                if self.get(array, j) > self.get(array, j + 1) {
+                    self.swap(array, j, j + 1);
+                    self.wait();
                 }
             }
-            Self::mark_sorted(array, last);
+            self.mark_sorted(array, last);
         }
-        Self::mark_sorted(array, 0);
+        self.mark_sorted(array, 0);
     }
 }
