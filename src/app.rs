@@ -6,7 +6,8 @@ use std::thread;
 
 use crate::array::{Array, State};
 use crate::cli::Parameters;
-use crate::sorts;
+use crate::algorithms;
+use crate::cli::{Search, Sort};
 
 const BACKGROUND_COLOUR: Color = TRANSPARENT;
 const VALUE_COLOUR: Color = WHITE;
@@ -19,28 +20,38 @@ pub struct App {
 
 impl App {
     pub fn init(parameters: Parameters) -> Self {
-        let state = State::new(parameters.length);
+        // Can this be improved?
+        // https://doc.rust-lang.org/edition-guide/rust-2018/trait-system/impl-trait-for-returning-complex-types-with-ease.html
+        let algo: Box<dyn algorithms::Algorithm + Send> = match parameters.sort {
+            Ok(Sort::Bubble) => Box::new(algorithms::bubble::BubbleSort),
+            Ok(Sort::Cocktail) => Box::new(algorithms::cocktail::CocktailSort),
+            Ok(Sort::Comb) => Box::new(algorithms::comb::CombSort),
+            Ok(Sort::Gnome) => Box::new(algorithms::gnome::GnomeSort),
+            Ok(Sort::Heap) => Box::new(algorithms::heap::HeapSort),
+            Ok(Sort::Insertion) => Box::new(algorithms::insertion::InsertionSort),
+            Ok(Sort::Merge) => Box::new(algorithms::merge::MergeSort),
+            Ok(Sort::Quick) => Box::new(algorithms::quick::QuickSort),
+            Ok(Sort::Selection) => Box::new(algorithms::selection::SelectionSort),
+            Ok(Sort::Shell) => Box::new(algorithms::shell::ShellSort),
+            Err(_) => match parameters.search {
+                Ok(Search::Linear) => Box::new(algorithms::linear::LinearSearch),
+                Err(e) => panic!("{}", e),
+            }
+        };
+
+        let state = match parameters.sort {
+            Ok(_) => State::new(parameters.length, false),
+            Err(_) => match parameters.search {
+                Ok(_) => State::new(parameters.length, true),
+                Err(e) => panic!("{}", e),
+            }
+        };
         let array = Array::new(state);
         let sorting_a = array.clone();
 
-        // Can this be improved?
-        // https://doc.rust-lang.org/edition-guide/rust-2018/trait-system/impl-trait-for-returning-complex-types-with-ease.html
-        let algo: Box<dyn sorts::Sort + Send> = match parameters.algorithm.as_str() {
-            "bubble" => Box::new(sorts::bubble::BubbleSort),
-            "cocktail" => Box::new(sorts::cocktail::CocktailSort),
-            "comb" => Box::new(sorts::comb::CombSort),
-            "gnome" => Box::new(sorts::gnome::GnomeSort),
-            "heap" => Box::new(sorts::heap::HeapSort),
-            "insertion" => Box::new(sorts::insertion::InsertionSort),
-            "merge" => Box::new(sorts::merge::MergeSort),
-            "quick" => Box::new(sorts::quick::QuickSort),
-            "selection" => Box::new(sorts::selection::SelectionSort),
-            "shell" => Box::new(sorts::shell::ShellSort),
-            _ => panic!("Unrecognised algorithm: {}", parameters.algorithm),
-        };
 
         thread::spawn(move || {
-            algo.sort(&sorting_a);
+            algo.run(&sorting_a);
         });
 
         App { array }

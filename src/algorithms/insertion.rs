@@ -1,9 +1,9 @@
-use super::{Array, Sort};
+use super::{Array, Algorithm};
 
 pub struct InsertionSort;
 
-impl Sort for InsertionSort {
-    fn sort(&self, array: &Array) {
+impl Algorithm for InsertionSort {
+    fn run(&self, array: &Array) {
         let len = array.len();
         for i in 0..len {
             let mut j = i;
@@ -21,7 +21,7 @@ impl Sort for InsertionSort {
 impl InsertionSort {
     fn mark_all_sorted(&self, array: &Array, len: usize) {
         for i in 0..len {
-            array.mark_sorted(i)
+            array.mark_final(i)
         }
     }
 }

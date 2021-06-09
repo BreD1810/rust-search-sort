@@ -11,8 +11,10 @@ pub mod quick;
 pub mod selection;
 pub mod shell;
 
-pub trait Sort {
-    fn sort(&self, array: &Array);
+pub mod linear;
+
+pub trait Algorithm {
+    fn run(&self, array: &Array);
 
     fn wait(&self) {
         use std::thread::sleep;

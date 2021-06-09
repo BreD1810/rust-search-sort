@@ -1,9 +1,9 @@
-use super::{Array, Sort};
+use super::{Array, Algorithm};
 
 pub struct BubbleSort;
 
-impl Sort for BubbleSort {
-    fn sort(&self, array: &Array) {
+impl Algorithm for BubbleSort {
+    fn run(&self, array: &Array) {
         let len = array.len();
         for i in 0..len - 1 {
             let last = len - i - 1;
@@ -13,8 +13,8 @@ impl Sort for BubbleSort {
                     self.wait();
                 }
             }
-            array.mark_sorted(last);
+            array.mark_final(last);
         }
-        array.mark_sorted(0);
+        array.mark_final(0);
     }
 }

@@ -1,9 +1,9 @@
-use super::{Array, Sort};
+use super::{Array, Algorithm};
 
 pub struct HeapSort;
 
-impl Sort for HeapSort {
-    fn sort(&self, array: &Array) {
+impl Algorithm for HeapSort {
+    fn run(&self, array: &Array) {
         let n = array.len();
 
         for i in (0..n / 2 - 1).rev() {
@@ -12,12 +12,12 @@ impl Sort for HeapSort {
 
         for i in (1..n).rev() {
             array.swap(0, i);
-            array.mark_sorted(i);
+            array.mark_final(i);
             self.wait();
             self.heapify(array, i, 0);
         }
 
-        array.mark_sorted(0);
+        array.mark_final(0);
     }
 }
 

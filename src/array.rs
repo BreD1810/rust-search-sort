@@ -41,7 +41,7 @@ impl Array {
         s.values.swap(first, second);
     }
 
-    pub fn mark_sorted(&self, index: usize) {
+    pub fn mark_final(&self, index: usize) {
         let mut s = self.get_state();
         s.sorted_indexes.push(index);
     }
@@ -74,10 +74,12 @@ pub struct State {
 }
 
 impl State {
-    pub fn new(length: u32) -> Self {
+    pub fn new(length: u32, sorted: bool) -> Self {
         // Values between 1 and 64 inclusive
         let mut values: Vec<u32> = (1..length + 1).collect();
-        values.shuffle(&mut thread_rng());
+        if !sorted {
+            values.shuffle(&mut thread_rng());
+        }
 
         let no_values = values.len();
         let accesses = Vec::with_capacity(no_values);

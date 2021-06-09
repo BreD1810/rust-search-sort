@@ -1,9 +1,9 @@
-use super::{Array, Sort};
+use super::{Array, Algorithm};
 
 pub struct SelectionSort;
 
-impl Sort for SelectionSort {
-    fn sort(&self, array: &Array) {
+impl Algorithm for SelectionSort {
+    fn run(&self, array: &Array) {
         let len = array.len();
 
         for i in 0..len {
@@ -18,7 +18,7 @@ impl Sort for SelectionSort {
                 array.swap(i, j_min);
                 self.wait();
             }
-            array.mark_sorted(i);
+            array.mark_final(i);
         }
     }
 }

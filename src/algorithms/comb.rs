@@ -1,9 +1,9 @@
-use super::{Array, Sort};
+use super::{Array, Algorithm};
 
 pub struct CombSort;
 
-impl Sort for CombSort {
-    fn sort(&self, array: &Array) {
+impl Algorithm for CombSort {
+    fn run(&self, array: &Array) {
         let len = array.len();
         let mut gap = len;
         let shrink = 1.3;
@@ -28,7 +28,7 @@ impl Sort for CombSort {
         }
 
         for i in 0..len {
-            array.mark_sorted(i);
+            array.mark_final(i);
         }
     }
 }

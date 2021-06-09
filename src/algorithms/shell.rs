@@ -1,9 +1,9 @@
-use super::{Array, Sort};
+use super::{Array, Algorithm};
 
 pub struct ShellSort;
 
-impl Sort for ShellSort {
-    fn sort(&self, array: &Array) {
+impl Algorithm for ShellSort {
+    fn run(&self, array: &Array) {
         let len = array.len();
         let gaps = vec![701, 301, 132, 57, 23, 10, 4, 1];
 
@@ -25,7 +25,7 @@ impl Sort for ShellSort {
         }
 
         for i in 0..len {
-            array.mark_sorted(i);
+            array.mark_final(i);
         }
     }
 }

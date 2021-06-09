@@ -1,9 +1,9 @@
-use super::{Array, Sort};
+use super::{Array, Algorithm};
 
 pub struct QuickSort;
 
-impl Sort for QuickSort {
-    fn sort(&self, array: &Array) {
+impl Algorithm for QuickSort {
+    fn run(&self, array: &Array) {
         let high = array.len() as isize - 1;
         self.sort_partition(array, 0, high);
     }
@@ -16,7 +16,7 @@ impl QuickSort {
             self.sort_partition(array, low, pivot - 1);
             self.sort_partition(array, pivot + 1, high);
         } else {
-            array.mark_sorted(low as usize);
+            array.mark_final(low as usize);
         }
     }
 
@@ -31,7 +31,7 @@ impl QuickSort {
             self.wait();
         }
         array.swap(i as usize, high as usize);
-        array.mark_sorted(i as usize);
+        array.mark_final(i as usize);
         i
     }
 }

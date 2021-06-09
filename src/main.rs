@@ -7,7 +7,7 @@ use piston::window::WindowSettings;
 mod app;
 mod array;
 mod cli;
-mod sorts;
+mod algorithms;
 
 use crate::app::App;
 use crate::cli::parse_parameters;
@@ -17,7 +17,13 @@ const OPENGL_VERSION: OpenGL = OpenGL::V3_2;
 
 fn main() {
     let parameters = parse_parameters();
-    let window_title = format!("{} sort", &parameters.algorithm);
+    let window_title = match parameters.sort {
+        Ok(algo) => format!("{} sort", algo.to_string()),
+        Err(_) => match parameters.search {
+            Ok(algo) => format!("{} search", algo.to_string()),
+            Err(e) => panic!("{}", e),
+        }
+    };
 
     // Create a Glutin window.
     let mut window: Window = WindowSettings::new(window_title, [640, 480])

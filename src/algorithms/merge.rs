@@ -1,9 +1,9 @@
-use super::{Array, Sort};
+use super::{Array, Algorithm};
 
 pub struct MergeSort;
 
-impl Sort for MergeSort {
-    fn sort(&self, array: &Array) {
+impl Algorithm for MergeSort {
+    fn run(&self, array: &Array) {
         let len = array.len() - 1;
         self.merge_sort(array, 0, len, true);
     }
@@ -38,7 +38,7 @@ impl MergeSort {
                 j += 1;
             }
             if last_pass {
-                array.mark_sorted(pos);
+                array.mark_final(pos);
             }
             pos += 1;
             self.wait();
@@ -48,7 +48,7 @@ impl MergeSort {
             array.set(pos, left_array[i]);
             i += 1;
             if last_pass {
-                array.mark_sorted(pos);
+                array.mark_final(pos);
             }
             pos += 1;
             self.wait();
@@ -58,7 +58,7 @@ impl MergeSort {
             array.set(pos, right_array[j]);
             j += 1;
             if last_pass {
-                array.mark_sorted(pos);
+                array.mark_final(pos);
             }
             pos += 1;
             self.wait();

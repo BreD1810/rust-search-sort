@@ -1,9 +1,9 @@
-use super::{Array, Sort};
+use super::{Array, Algorithm};
 
 pub struct GnomeSort;
 
-impl Sort for GnomeSort {
-    fn sort(&self, array: &Array) {
+impl Algorithm for GnomeSort {
+    fn run(&self, array: &Array) {
         let mut pos = 0;
         let len = array.len();
         println!("Pos {}", pos);
@@ -21,7 +21,7 @@ impl Sort for GnomeSort {
         }
 
         for i in 0..len {
-            array.mark_sorted(i);
+            array.mark_final(i);
         }
     }
 }
