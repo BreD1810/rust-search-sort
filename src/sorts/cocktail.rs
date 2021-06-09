@@ -22,6 +22,7 @@ impl Sort for CocktailSort {
             if !swapped {
                 for i in start..(end + 1) {
                     array.mark_sorted(i);
+                    println!("Marking {} as sorted", i);
                 }
                 break;
             }
@@ -39,6 +40,13 @@ impl Sort for CocktailSort {
 
             array.mark_sorted(start);
             start += 1;
+
+            if !swapped {
+                for i in start..(end + 1) {
+                    array.mark_sorted(i);
+                    println!("Marking {} as sorted", i);
+                }
+            }
         }
     }
 }
