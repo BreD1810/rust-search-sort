@@ -3,6 +3,7 @@ use std::sync::{Arc, Mutex};
 pub use crate::array::Array;
 
 pub mod bubble;
+pub mod cocktail;
 pub mod insertion;
 pub mod merge;
 pub mod quick;

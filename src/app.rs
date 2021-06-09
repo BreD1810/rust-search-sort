@@ -27,6 +27,7 @@ impl App {
         // https://doc.rust-lang.org/edition-guide/rust-2018/trait-system/impl-trait-for-returning-complex-types-with-ease.html
         let algo: Box<dyn sorts::Sort + Send> = match parameters.algorithm.as_str() {
             "bubble" => Box::new(sorts::bubble::BubbleSort),
+            "cocktail" => Box::new(sorts::cocktail::CocktailSort),
             "insertion" => Box::new(sorts::insertion::InsertionSort),
             "merge" => Box::new(sorts::merge::MergeSort),
             "quick" => Box::new(sorts::quick::QuickSort),
