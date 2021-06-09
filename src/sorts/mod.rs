@@ -4,6 +4,7 @@ pub use crate::array::Array;
 
 pub mod bubble;
 pub mod cocktail;
+pub mod comb;
 pub mod gnome;
 pub mod insertion;
 pub mod merge;
