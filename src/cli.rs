@@ -9,6 +9,7 @@ pub fn parse_parameters() -> Parameters {
     let sorting_algos = &[
         "bubble",
         "cocktail",
+        "gnome",
         "insertion",
         "merge",
         "quick",

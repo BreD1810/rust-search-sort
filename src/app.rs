@@ -28,6 +28,7 @@ impl App {
         let algo: Box<dyn sorts::Sort + Send> = match parameters.algorithm.as_str() {
             "bubble" => Box::new(sorts::bubble::BubbleSort),
             "cocktail" => Box::new(sorts::cocktail::CocktailSort),
+            "gnome" => Box::new(sorts::gnome::GnomeSort),
             "insertion" => Box::new(sorts::insertion::InsertionSort),
             "merge" => Box::new(sorts::merge::MergeSort),
             "quick" => Box::new(sorts::quick::QuickSort),
