@@ -11,6 +11,7 @@ pub fn parse_parameters() -> Parameters {
         "cocktail",
         "comb",
         "gnome",
+        "heap",
         "insertion",
         "merge",
         "quick",

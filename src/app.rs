@@ -30,6 +30,7 @@ impl App {
             "cocktail" => Box::new(sorts::cocktail::CocktailSort),
             "comb" => Box::new(sorts::comb::CombSort),
             "gnome" => Box::new(sorts::gnome::GnomeSort),
+            "heap" => Box::new(sorts::heap::HeapSort),
             "insertion" => Box::new(sorts::insertion::InsertionSort),
             "merge" => Box::new(sorts::merge::MergeSort),
             "quick" => Box::new(sorts::quick::QuickSort),

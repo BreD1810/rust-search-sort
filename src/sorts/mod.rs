@@ -6,6 +6,7 @@ pub mod bubble;
 pub mod cocktail;
 pub mod comb;
 pub mod gnome;
+pub mod heap;
 pub mod insertion;
 pub mod merge;
 pub mod quick;
